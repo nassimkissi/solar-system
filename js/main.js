@@ -44,6 +44,22 @@ function createPlanet(scene){
     planet.material = planetMaterial
 }
 
+function createSkybox(scene){
+    const skybox = BABYLON.MeshBuilder.CreateBox('skybox', { size: 1000 }, scene)
+    const skyboxMaterial = new BABYLON.StandardMaterial('skyboxMaterial', scene)
+
+    skyboxMaterial.backFaceCulling = false
+    skyboxMaterial.specularColor = BABYLON.Color3.Black()
+    skyboxMaterial.diffuseColor = BABYLON.Color3.Black()
+
+    skyboxMaterial.reflectionTexture = new BABYLON.CubeTexture('assets/images/skybox/skybox', scene)
+    skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE
+
+    skybox.infiniteDistance = true
+
+    skybox.material = skyboxMaterial
+}
+
 function createScene(){
     // create our scene
     const scene = new BABYLON.Scene(engine)
@@ -56,6 +72,8 @@ function createScene(){
     createSun(scene)
 
     createPlanet(scene)
+
+    createSkybox(scene)
 
     return scene
 }
