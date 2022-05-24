@@ -75,6 +75,16 @@ function createSkybox(scene){
     skybox.material = skyboxMaterial
 }
 
+function createShip(scene) {
+    BABYLON.SceneLoader.ImportMesh('', '/assets/models/', 'spaceCraft1.obj', scene, (meshes) => {
+        console.log(meshes)
+        meshes.forEach((mesh) => {
+            mesh.position = new BABYLON.Vector3(0, -5, 10)
+            mesh.scaling = new BABYLON.Vector3(0.2, 0.2, 0.2)
+        })
+    })
+}
+
 function createScene(){
     // create our scene
     const scene = new BABYLON.Scene(engine)
@@ -89,6 +99,8 @@ function createScene(){
     createPlanet(scene)
 
     createSkybox(scene)
+
+    createShip(scene)
 
     return scene
 }
