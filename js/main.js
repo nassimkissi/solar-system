@@ -39,9 +39,24 @@ function createPlanet(scene){
     planetMaterial.diffuseTexture = new BABYLON.Texture('assets/images/sand.png', scene)
     planetMaterial.specularColor = BABYLON.Color3.Black()
 
-    const planet = BABYLON.MeshBuilder.CreateSphere('planet', { segments: 16, diameter: 1}, scene)
-    planet.position.x = 4
-    planet.material = planetMaterial
+    const speeds = [0.01, -0.01, 0.02]
+    for(let i = 0; i < 3; i += 1){
+        const planet = BABYLON.MeshBuilder.CreateSphere(`planet${i}`, { segments: 16, diameter: 1}, scene)
+        planet.position.x = (2 * i) +  4
+        planet.material = planetMaterial
+    
+        planet.orbit = {
+            radius: planet.position.x, 
+            speed: speeds[i], 
+            angle: 0
+        }
+    
+        scene.registerBeforeRender(() => {
+            planet.position.x = planet.orbit.radius * Math.sin((planet.orbit.angle))
+            planet.position.y = planet.orbit.radius * Math.cos((planet.orbit.angle))
+            planet.orbit.angle += planet.orbit.speed
+        })
+    }
 }
 
 function createSkybox(scene){
