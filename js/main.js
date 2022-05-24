@@ -53,7 +53,7 @@ function createPlanet(scene){
     
         scene.registerBeforeRender(() => {
             planet.position.x = planet.orbit.radius * Math.sin((planet.orbit.angle))
-            planet.position.y = planet.orbit.radius * Math.cos((planet.orbit.angle))
+            planet.position.z = planet.orbit.radius * Math.cos((planet.orbit.angle))
             planet.orbit.angle += planet.orbit.speed
         })
     }
@@ -77,7 +77,6 @@ function createSkybox(scene){
 
 function createShip(scene) {
     BABYLON.SceneLoader.ImportMesh('', '/assets/models/', 'spaceCraft1.obj', scene, (meshes) => {
-        console.log(meshes)
         meshes.forEach((mesh) => {
             mesh.position = new BABYLON.Vector3(0, -5, 10)
             mesh.scaling = new BABYLON.Vector3(0.2, 0.2, 0.2)
@@ -109,4 +108,8 @@ const mainScene = createScene()
 
 engine.runRenderLoop(() => {
     mainScene.render()
+})
+
+window.addEventListener('resize', function() {
+    engine.resize()
 })
