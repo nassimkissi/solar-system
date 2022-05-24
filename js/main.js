@@ -22,7 +22,16 @@ function createLight(scene){
 }
 
 function createSun(scene){
+    const sunMaterial = new BABYLON.StandardMaterial('sunMateiral', scene)
+    sunMaterial.emissiveTexture = new BABYLON.Texture('assets/images/sun.jpg', scene)
+    sunMaterial.diffuseColor = BABYLON.Color3.Black()
+    sunMaterial.specularColor = BABYLON.Color3.Black()
+
     const sun = BABYLON.MeshBuilder.CreateSphere('sun', { segments: 16, diameter: 4}, scene)
+    sun.material = sunMaterial
+
+    const sunLight = new BABYLON.PointLight('sunLight', BABYLON.Vector3.Zero(), scene)
+    sunLight.intensity = 2
 }
 
 function createPlanet(scene){
